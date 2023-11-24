@@ -1,3 +1,4 @@
+import { generateCode } from "./utils";
 /**
  * Хранилище состояния приложения
  */
@@ -44,7 +45,7 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: new Date().getTime(), title: 'Новая запись'}]
+      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
     })
   };
 

@@ -26,3 +26,20 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+export const getWordForm = (number) => {
+  const lastDigit = number % 10;
+  const secondToLastDigit = Math.floor((number % 100) / 10);
+
+  if (secondToLastDigit === 1) {
+    return 'раз';
+  } else if (lastDigit === 1) {
+    return 'раз';
+  } else if (lastDigit >= 2 && lastDigit <= 4) {
+    return 'раза';
+  } else {
+    return 'раз';
+  }
+}
+
+export const generateCode = ()  => Math.floor(Math.random() * 1000)
