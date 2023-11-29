@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function Button(props) {
   return (
     <div>
-      <button className="Button">{props.title}</button>
+      <button onClick={props.onClick} className="Button">{props.title}</button>
     </div>
   );
 }
@@ -14,11 +14,11 @@ export default Button;
 
 Button.propTypes = {
   title: PropTypes.string.isRequired,
-  //   onDelete: PropTypes.func,
+  onClick: PropTypes.func,
   //   onSelect: PropTypes.func,
 };
 
-// Button.defaultProps = {
-//     onDelete: () => {},
+Button.defaultProps = {
+  onClick: () => {},
 //     onSelect: () => {},
-// };
+};

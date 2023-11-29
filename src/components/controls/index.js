@@ -16,8 +16,6 @@ function Controls(props) {
     ? props.cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
     : 0;
 
-  console.log(total);
-
   return (
     <div className="Controls">
       <span className="Controls-text">В корзине:</span>
@@ -26,7 +24,7 @@ function Controls(props) {
           ? `${quantityProduct} ${pluralWord} / ${formattedPrice(total)} ₽`
           : "пусто"}
       </span>
-      <Button title="Перейти" />
+      <Button title="Перейти" onClick={props.onIsVisibleModal}/>
     </div>
   );
 }
@@ -40,11 +38,11 @@ Controls.propTypes = {
       title: PropTypes.string,
     })
   ).isRequired,
-  onAdd: PropTypes.func,
+  onIsVisibleModal: PropTypes.func,
 };
 
 Controls.defaultProps = {
-  onAdd: () => {},
+  onIsVisibleModal: () => {},
 };
 
 export default React.memo(Controls);

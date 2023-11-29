@@ -24,15 +24,15 @@ function Item(props) {
 
   return (
     <div
-      className={"Item" + (props.item.selected ? " Item_selected" : "")}
-      onClick={callbacks.onClick}
+      className={"Item"}
+      
     >
       <div className="Item-code">{props.item.code}</div>
       <div className="Item-title">{props.item.title}</div>
       <div className="Item-price">{formattedPrice(props.item.price)} ₽</div>
       <div className="Item-actions">
         {/* <button onClick={callbacks.onDelete}>Добавить</button> */}
-        <Button title="Добавить" />
+        <Button title="Добавить" onClick={callbacks.onClick}/>
       </div>
     </div>
   );
