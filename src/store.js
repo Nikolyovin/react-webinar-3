@@ -1,4 +1,4 @@
-import {generateCode} from "./utils";
+import { generateCode } from "./utils";
 
 /**
  * Хранилище состояния приложения
@@ -18,8 +18,8 @@ class Store {
     this.listeners.push(listener);
     // Возвращается функция для удаления добавленного слушателя
     return () => {
-      this.listeners = this.listeners.filter(item => item !== listener);
-    }
+      this.listeners = this.listeners.filter((item) => item !== listener);
+    };
   }
 
   /**
@@ -43,12 +43,25 @@ class Store {
   /**
    * Добавление новой записи
    */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
-    })
-  };
+  addItem(itemId) {
+    const isNew = !this.state.cart.some(({ code }) => code === itemId);
+    if (!isNew) {
+      const updateCart = this.state.cart.map((item) =>
+        item.code === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      );
+
+      this.setState({ ...this.state, cart: updateCart });
+    } else {
+      const itemToAdd = this.state.list.find((item) => item.code === itemId);
+
+      if (itemToAdd) {
+        this.setState({
+          ...this.state,
+          cart: [...this.state.cart, { ...itemToAdd, quantity: 1 }],
+        });
+      }
+    }
+  }
 
   /**
    * Удаление записи по коду
@@ -58,9 +71,9 @@ class Store {
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code)
-    })
-  };
+      list: this.state.list.filter((item) => item.code !== code),
+    });
+  }
 
   /**
    * Выделение записи по коду
@@ -69,19 +82,19 @@ class Store {
   selectItem(code) {
     this.setState({
       ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
-      })
-    })
+      // list: this.state.list.map(item => {
+      //   if (item.code === code) {
+      //     // Смена выделения и подсчёт
+      //     return {
+      //       ...item,
+      //       selected: !item.selected,
+      //       count: item.selected ? item.count : item.count + 1 || 1,
+      //     };
+      //   }
+      //   // Сброс выделения если выделена
+      //   return item.selected ? {...item, selected: false} : item;
+      // })
+    });
   }
 }
 
