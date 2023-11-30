@@ -16,7 +16,7 @@ function App({ store }) {
 
   const [isVisibleModal, setIsVisibleModal] = useState(false);
 
-  const quantityProduct = cart.length;
+  const quantityProduct = cart.reduce((sum, item) => sum + item.quantity, 0);
   const total = quantityProduct
     ? cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
     : 0;
