@@ -3,6 +3,9 @@
   justify-content: flex-end;
   padding: 20px;
   border-bottom: 1px dashed #ccc;
+  background-color: 'white';
+  min-height: 61px;
+  box-sizing: border-box;
 }
 
 .Controls-text{

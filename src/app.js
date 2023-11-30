@@ -14,7 +14,12 @@ function App({ store }) {
   const list = store.getState().list;
   const cart = store.getState().cart;
 
-  const [isVisibleModal, setIsVisibleModal] = useState(false)
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
+
+  const quantityProduct = cart.length;
+  const total = quantityProduct
+    ? cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    : 0;
 
   const callbacks = {
     onDeleteItem: useCallback(
@@ -39,23 +44,46 @@ function App({ store }) {
     ),
 
     onIsVisibleModal: useCallback(
-      () => setIsVisibleModal(!isVisibleModal),[isVisibleModal]
-    )
+      () => setIsVisibleModal(!isVisibleModal),
+      [isVisibleModal]
+    ),
   };
 
   return (
     <PageLayout>
       <Head title="Магазин" isCart={false} />
       {/* <Controls onAdd={callbacks.onAddItem} /> */}
-      <Controls cart={cart} onIsVisibleModal={callbacks.onIsVisibleModal}/>
+      <Controls
+        total={total}
+        quantityProduct={quantityProduct}
+        onIsVisibleModal={callbacks.onIsVisibleModal}
+      />
       <List
         list={list}
-        onDeleteItem={callbacks.onDeleteItem}
+        // onDeleteItem={callbacks.onDeleteItem}
         onSelectItem={callbacks.onSelectItem}
-        onAddItem={callbacks.onAddItem}
+        onClick={callbacks.onAddItem}
       />
-      <Modal title={"Корзина"} isVisible={isVisibleModal} onIsVisibleModal={callbacks.onIsVisibleModal}>
-        <p>текст модалки</p>
+      <Modal
+        title={"Корзина"}
+        isVisible={isVisibleModal}
+        total={total}
+        // onIsVisibleModal={callbacks.onIsVisibleModal}
+      >
+        <Head
+          isRounded={true}
+          title="Корзина"
+          isCart={true}
+          onIsVisibleModal={callbacks.onIsVisibleModal}
+        />
+        <Controls isEmpty={true} />
+        <List
+          list={cart}
+          onClick={callbacks.onDeleteItem}
+          // onSelectItem={callbacks.onSelectItem}
+          // onAddItem={callbacks.onAddItem}
+        />
+        {/* <div className=""></div> */}
       </Modal>
     </PageLayout>
   );

@@ -10,29 +10,24 @@ function Item(props) {
 
   const callbacks = {
     onClick: () => {
-      props.onAdd(props.item.code);
-      console.log("id", props.item.code);
-      // if (!props.item.selected) {
-      //   setCount(count + 1);
-      // }
+      props.onClick(props.item.code);
     },
-    // onDelete: (e) => {
-    //   e.stopPropagation();
-    //   props.onDelete(props.item.code);
-    // },
   };
 
   return (
-    <div
-      className={"Item"}
-      
-    >
+    <div className={"Item"}>
       <div className="Item-code">{props.item.code}</div>
       <div className="Item-title">{props.item.title}</div>
       <div className="Item-price">{formattedPrice(props.item.price)} ₽</div>
+      {props.item.quantity && (
+        <div className="Item-quantity">{props.item.quantity} ШТ</div>
+      )}
       <div className="Item-actions">
         {/* <button onClick={callbacks.onDelete}>Добавить</button> */}
-        <Button title="Добавить" onClick={callbacks.onClick}/>
+        <Button
+          title={props.item.quantity ? "Удалить" : "Добавить"}
+          onClick={callbacks.onClick}
+        />
       </div>
     </div>
   );
@@ -42,7 +37,7 @@ Item.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
-    // selected: PropTypes.bool,
+    quantity: PropTypes.number,
     price: PropTypes.number,
   }).isRequired,
   onDelete: PropTypes.func,

@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import "./style.css";
 import Button from "../button";
 
-function Head({ title, isCart, onIsVisibleModal }) {
+function Head({ title, isCart, onIsVisibleModal, isRounded }) {
+  const headClassName = isRounded ? "Head Rounded" : "Head";
   return (
-    <div className="Head">
+    <div className={headClassName}>
       <h1>{title}</h1>
       {isCart && <Button onClick={onIsVisibleModal} title="закрыть" />}
     </div>
@@ -15,7 +16,8 @@ function Head({ title, isCart, onIsVisibleModal }) {
 Head.propTypes = {
   title: PropTypes.node,
   isCart: PropTypes.bool.isRequired,
-  onIsVisibleModal: PropTypes.func
+  isRounded: PropTypes.bool,
+  onIsVisibleModal: PropTypes.func,
 };
 
 Head.defaultProps = {

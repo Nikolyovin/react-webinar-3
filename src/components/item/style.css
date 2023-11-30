@@ -22,9 +22,14 @@
 .Item-price {
   font-size: 18px;
 }
+.Item-quantity {
+  font-size: 18px;
+  margin-left: 62px;
+}
 
 .Item-actions {
   display: flex;
   justify-content: flex-end;
   padding: 20px;
 }
+

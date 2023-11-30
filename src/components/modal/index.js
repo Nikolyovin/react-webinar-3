@@ -2,22 +2,25 @@ import React from "react";
 import Button from "../button";
 import PropTypes from "prop-types";
 import "./style.css";
-import Head from "../head";
+import { formattedPrice } from "../../utils";
 
-const Modal = ({ children, title, isVisible, onIsVisibleModal }) => {
-  console.log("isVisible", isVisible);
+const Modal = ({ children, title, isVisible, onIsVisibleModal, total }) => {
   return (
-    // <div className={isVisible ? "Modal-active" : "Modal"}>
-    <div style={ isVisible ? {display: 'flex' }: {display: 'none' }} className="Overlay">
-    <div className="Modal">
-      {/* <div className="Modal-head">
-        <h3>{title}</h3>
-        <Button title="закрыть" />
-      </div> */}
-      <Head title="Корзина" isCart={true} onIsVisibleModal={onIsVisibleModal}/>
-      <div className="Modal-content">{children}</div>
+    <div
+      style={isVisible ? { display: "flex" } : { display: "none" }}
+      className="Overlay"
+    >
+      <div className="Modal">
+        <div className="Modal-content">{children}</div>
+        <div className="Modal-footer">
+          <span className="Modal-footer-text">Итого</span>{" "}
+          <span className="Modal-footer-text">{`${formattedPrice(
+            total
+          )} ₽`}</span>
+        </div>
+      </div>
     </div>
-    </div>
+    // </div>
   );
 };
 
@@ -26,8 +29,9 @@ export default Modal;
 Modal.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string,
+  total: PropTypes.number,
   isVisible: PropTypes.bool,
-  onIsVisibleModal: PropTypes.func
+  onIsVisibleModal: PropTypes.func,
 };
 
 Modal.defaultProps = {
