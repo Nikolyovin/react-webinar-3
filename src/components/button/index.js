@@ -3,22 +3,26 @@ import "./style.css";
 import PropTypes from "prop-types";
 
 function Button(props) {
+  const callbacks = {
+    onClick: props.onClick,
+  };
+
   return (
     <div>
-      <button onClick={props.onClick} className="Button">{props.title}</button>
+      <button onClick={callbacks.onClick} className="Button">
+        {props.title}
+      </button>
     </div>
   );
 }
 
-export default Button;
-
 Button.propTypes = {
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,
-  //   onSelect: PropTypes.func,
 };
 
 Button.defaultProps = {
   onClick: () => {},
-//     onSelect: () => {},
 };
+
+export default Button;

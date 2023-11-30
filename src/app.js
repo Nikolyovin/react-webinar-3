@@ -29,13 +29,6 @@ function App({ store }) {
       [store]
     ),
 
-    onSelectItem: useCallback(
-      (code) => {
-        store.selectItem(code);
-      },
-      [store]
-    ),
-
     onAddItem: useCallback(
       (code) => {
         store.addItem(code);
@@ -52,24 +45,13 @@ function App({ store }) {
   return (
     <PageLayout>
       <Head title="Магазин" isCart={false} />
-      {/* <Controls onAdd={callbacks.onAddItem} /> */}
       <Controls
         total={total}
         quantityProduct={quantityProduct}
         onIsVisibleModal={callbacks.onIsVisibleModal}
       />
-      <List
-        list={list}
-        // onDeleteItem={callbacks.onDeleteItem}
-        onSelectItem={callbacks.onSelectItem}
-        onClick={callbacks.onAddItem}
-      />
-      <Modal
-        title={"Корзина"}
-        isVisible={isVisibleModal}
-        total={total}
-        // onIsVisibleModal={callbacks.onIsVisibleModal}
-      >
+      <List list={list} onClick={callbacks.onAddItem} />
+      <Modal title={"Корзина"} isVisible={isVisibleModal} total={total}>
         <Head
           isRounded={true}
           title="Корзина"
@@ -77,13 +59,7 @@ function App({ store }) {
           onIsVisibleModal={callbacks.onIsVisibleModal}
         />
         <Controls isEmpty={true} />
-        <List
-          list={cart}
-          onClick={callbacks.onDeleteItem}
-          // onSelectItem={callbacks.onSelectItem}
-          // onAddItem={callbacks.onAddItem}
-        />
-        {/* <div className=""></div> */}
+        <List list={cart} onClick={callbacks.onDeleteItem} />
       </Modal>
     </PageLayout>
   );

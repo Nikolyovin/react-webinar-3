@@ -3,12 +3,17 @@ import PropTypes from "prop-types";
 import "./style.css";
 import Button from "../button";
 
-function Head({ title, isCart, onIsVisibleModal, isRounded }) {
-  const headClassName = isRounded ? "Head Rounded" : "Head";
+function Head(props) {
+  const headClassName = props.isRounded ? "Head Rounded" : "Head";
+
+  const callbacks = {
+    onClick: props.onIsVisibleModal,
+  };
+
   return (
     <div className={headClassName}>
-      <h1>{title}</h1>
-      {isCart && <Button onClick={onIsVisibleModal} title="закрыть" />}
+      <h1>{props.title}</h1>
+      {props.isCart && <Button onClick={callbacks.onClick} title="закрыть" />}
     </div>
   );
 }

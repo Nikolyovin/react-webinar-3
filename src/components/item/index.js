@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { formattedPrice } from "../../utils";
 import "./style.css";
 import Button from "../button";
 
 function Item(props) {
-  // Счётчик выделений
-  // const [count, setCount] = useState(0);
-
   const callbacks = {
     onClick: () => {
       props.onClick(props.item.code);
@@ -23,7 +20,6 @@ function Item(props) {
         <div className="Item-quantity">{props.item.quantity} ШТ</div>
       )}
       <div className="Item-actions">
-        {/* <button onClick={callbacks.onDelete}>Добавить</button> */}
         <Button
           title={props.item.quantity ? "Удалить" : "Добавить"}
           onClick={callbacks.onClick}
@@ -40,15 +36,11 @@ Item.propTypes = {
     quantity: PropTypes.number,
     price: PropTypes.number,
   }).isRequired,
-  onDelete: PropTypes.func,
-  onSelect: PropTypes.func,
-  onAdd: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 Item.defaultProps = {
-  onDelete: () => {},
-  onSelect: () => {},
-  onAdd: () => {},
+  onClick: () => {},
 };
 
 export default React.memo(Item);

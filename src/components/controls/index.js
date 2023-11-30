@@ -5,17 +5,16 @@ import Button from "../button";
 import { formattedPrice, plural } from "../../utils";
 
 function Controls(props) {
-  // const quantityProduct = props.cart.length;
   const pluralWord = plural(props.quantityProduct, {
     one: "товар",
     few: "товара",
     many: "товаров",
   });
-  // console.log("props", props);
-  // const total = quantityProduct
-  //   ? props.cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  //   : 0;
-  console.log("props.quantityProduct", props.quantityProduct);
+
+  const callbacks = {
+    onClick: props.onIsVisibleModal,
+  };
+
   return (
     <div className="Controls">
       {props.isEmpty || (
@@ -29,7 +28,7 @@ function Controls(props) {
               : "пусто"}
           </span>
 
-          <Button title="Перейти" onClick={props.onIsVisibleModal} />
+          <Button title="Перейти" onClick={callbacks.onClick} />
         </>
       )}
     </div>
@@ -37,14 +36,6 @@ function Controls(props) {
 }
 
 Controls.propTypes = {
-  // cart: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     code: PropTypes.number,
-  //     price: PropTypes.number,
-  //     quantity: PropTypes.number,
-  //     title: PropTypes.string,
-  //   })
-  // ),
   quantityProduct: PropTypes.number,
   total: PropTypes.number,
   onIsVisibleModal: PropTypes.func,
