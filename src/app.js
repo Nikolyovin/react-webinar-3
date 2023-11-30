@@ -16,7 +16,9 @@ function App({ store }) {
 
   const [isVisibleModal, setIsVisibleModal] = useState(false);
 
-  const quantityProduct = cart.reduce((sum, item) => sum + item.quantity, 0);
+  //не совсем понял что значит уникальный товар, поэтому оставлю два варианта
+  // const quantityProduct = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const quantityProduct = cart.length;
   const total = quantityProduct
     ? cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
     : 0;
