@@ -4,6 +4,8 @@ import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 import Modal from "./components/modal";
+import CartItem from "./components/cart-item";
+import ProductItem from "./components/product-item";
 
 /**
  * Приложение
@@ -13,15 +15,10 @@ import Modal from "./components/modal";
 function App({ store }) {
   const list = store.getState().list;
   const cart = store.getState().cart;
+  const quantityProduct= store.getState().quantityProduct;
+  const total = store.getState().total;
 
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-
-  //не совсем понял что значит уникальный товар, поэтому оставлю два варианта
-  // const quantityProduct = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const quantityProduct = cart.length;
-  const total = quantityProduct
-    ? cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    : 0;
 
   const callbacks = {
     onDeleteItem: useCallback(
@@ -52,7 +49,9 @@ function App({ store }) {
         quantityProduct={quantityProduct}
         onIsVisibleModal={callbacks.onIsVisibleModal}
       />
-      <List list={list} onClick={callbacks.onAddItem} />
+      <List list={list} onClick={callbacks.onAddItem} >
+        <ProductItem/>
+      </List>
       <Modal title={"Корзина"} isVisible={isVisibleModal} total={total}>
         <Head
           isRounded={true}
@@ -61,7 +60,9 @@ function App({ store }) {
           onIsVisibleModal={callbacks.onIsVisibleModal}
         />
         <Controls isEmpty={true} />
-        <List list={cart} onClick={callbacks.onDeleteItem} />
+        <List list={cart} onClick={callbacks.onDeleteItem} >
+          <CartItem />
+        </List>
       </Modal>
     </PageLayout>
   );

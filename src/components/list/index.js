@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Item from "../item";
 import "./style.css";
 
 function List(props) {
@@ -12,7 +11,7 @@ function List(props) {
     <div className="List">
       {props.list.map((item) => (
         <div key={item.code} className="List-item">
-          <Item item={item} onClick={callbacks.onClick} />
+           {React.cloneElement(props.children, {item: item, onClick: callbacks.onClick})}
         </div>
       ))}
     </div>
@@ -20,6 +19,7 @@ function List(props) {
 }
 
 List.propTypes = {
+  children: PropTypes.node,
   list: PropTypes.arrayOf(
     PropTypes.shape({
       code: PropTypes.number,

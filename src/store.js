@@ -59,6 +59,12 @@ class Store {
         });
       }
     }
+
+    this.setState({
+      ...this.state,
+      quantityProduct: this.state.cart.length,
+      total: this.state.cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    })
   }
 
   /**
@@ -69,6 +75,12 @@ class Store {
     this.setState({
       ...this.state,
       cart: this.state.cart.filter((item) => item.code !== code),
+    });
+    
+    this.setState({
+      ...this.state,
+      quantityProduct: this.state.cart.length,
+      total: this.state.cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
     });
   }
 }

@@ -12,7 +12,7 @@ function Head(props) {
 
   return (
     <div className={headClassName}>
-      <h1>{props.title}</h1>
+      <h1 className="Head-title">{props.title}</h1>
       {props.isCart && <Button onClick={callbacks.onClick} title="закрыть" />}
     </div>
   );
