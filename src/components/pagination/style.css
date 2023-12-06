@@ -1,0 +1,37 @@
+.Pagination{
+    display: flex;
+    justify-content: end;
+    padding: 22px 21px 20px 0;
+    align-items: center;
+}
+
+.Pagination-button{
+    box-sizing: border-box;
+    min-width: 20px; 
+    max-width: 30px; 
+    height: 20px;  
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.4px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 2px;
+    border: none;
+    background-color: white;
+}
+
+.Pagination-dots{
+    width: 20px; 
+    height: 20px;  
+    text-align: center;
+}
+
+.Pagination-button:hover{
+    cursor: pointer;
+    background-color: #E1E1E1;
+    
+}
+
+/* .Pagination-button.active{
+    background-color: #0087E9;
+} */
