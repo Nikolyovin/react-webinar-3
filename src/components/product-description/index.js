@@ -1,27 +1,38 @@
 import React from "react";
 import "./style.css";
+import { cn as bem } from "@bem-react/classname";
+import { numberFormat } from "../../utils";
 
 const ProductDescription = (props) => {
-  //  props.madeIn;
-  console.log(props.madeIn?.title);
+  const cn = bem("ProductDescription");
+
+  const callbacks = {
+    addToBasket: props.addToBasket
+  }
+
   return (
-    <div className="ProductDescription">
-      <p className="ProductDescription-text">{props.description}</p>
-      <p className="ProductDescription-country">
-        Страна производитель:{" "}
-        <span>
-          {" "}
-          {props.madeIn?.title}({props.madeIn?.code}){" "}
+    <div className={cn()}>
+      <p className={cn('text')} >{props.description}</p>
+      <p className={cn('text')}>
+        Категория: 
+        <span className={cn('textBold')}>
+          {props.category?.title}
         </span>
       </p>
-      <p className="ProductDescription-year">
-        Год выпуска:{props.edition}
-        <span>{/* {props.madeIn.title}({props.madeIn.code}) */}</span>
+      <p className={cn('text')}>
+        Страна производитель:
+        <span className={cn('textBold')}>
+          {props.madeIn?.title}({props.madeIn?.code})
+        </span>
       </p>
-      <p className="ProductDescription-price">
-        цена:{props.price}
-        <span>{/* {props.madeIn.title}({props.madeIn.code}) */}</span>
+      <p className={cn('text')}>
+      Год выпуска:<span className={cn('textBold')}>{props.edition}</span>
       </p>
+      
+      <p className={cn('price')}>
+        Цена:  <span className={cn('price-left')}>{numberFormat(props.price)} ₽</span>
+      </p>
+      <button onClick={() => callbacks.addToBasket(props._id)} className={cn('button')}>Добавить</button>
     </div>
   );
 };

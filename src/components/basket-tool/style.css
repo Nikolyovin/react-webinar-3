@@ -11,15 +11,8 @@
   font-size: 18px;
   line-height: 20.7px;
   cursor: pointer;
-}
-
-.BasketTool-home:hover {
   text-decoration: underline;
 }
-
-/* .BasketTool-label {
-
-} */
 
 .BasketTool-total {
   font-weight: bold;

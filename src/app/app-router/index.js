@@ -1,6 +1,5 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-// import Main from "../main";
 import Product from "../product";
 import main from "../main";
 

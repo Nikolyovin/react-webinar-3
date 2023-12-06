@@ -23,7 +23,6 @@ class Catalog extends StoreModule {
     const response = await fetch(
       `api/v1/articles?limit=${limit}&skip=${skip}&fields=items(_id, title, price),count`
     );
-    // const response = await fetch(`api/v1/articles?limit=*`);
     const json = await response.json();
     this.setState(
       {
@@ -33,15 +32,6 @@ class Catalog extends StoreModule {
       },
       "Загружены товары из АПИ"
     );
-  }
-
-  async loadOne(id) {
-    const response = await fetch(
-      `api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`
-    );
-    // const response = await fetch(`api/v1/articles?limit=*`);
-    const json = await response.json();
-    console.log("json", json);
   }
 
   setCurrentPage(currentPage) {

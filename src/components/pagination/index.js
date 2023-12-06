@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./style.css";
+import PaginationButton from "../pagination-button";
 
 const Pagination = ({ currentPage, totalItems, limit, onChangePage }) => {
   const totalPages = Math.floor(totalItems / limit);
@@ -10,36 +11,12 @@ const Pagination = ({ currentPage, totalItems, limit, onChangePage }) => {
     if (currentPage === 1) {
       for (let i = 1; i <= Math.min(3, totalPages); ++i) {
         buttons.push(
-          <button
-            style={
-              i === currentPage
-                ? { backgroundColor: "#0087E9", color: "white" }
-                : {}
-            }
-            className="Pagination-button"
-            onClick={() => onChangePage(i)}
-            key={i}
-            disabled={currentPage === i}
-          >
-            {i}
-          </button>
+          <PaginationButton key={i} onChangePage={onChangePage} currentPage={currentPage} page={i}/>
         );
       }
     } else {
       buttons.push(
-        <button
-          style={
-            1 === currentPage
-              ? { backgroundColor: "#0087E9", color: "white" }
-              : {}
-          }
-          className="Pagination-button"
-          onClick={() => onChangePage(1)}
-          key={1}
-          disabled={currentPage === 1}
-        >
-          1
-        </button>
+        <PaginationButton key={1} onChangePage={onChangePage} currentPage={currentPage} page={1}/>
       );
       if (currentPage > 3) {
         buttons.push(
@@ -49,27 +26,21 @@ const Pagination = ({ currentPage, totalItems, limit, onChangePage }) => {
         );
       }
 
+      if (currentPage === totalPages) {
+        buttons.push(
+          <PaginationButton key={totalPages-2} onChangePage={onChangePage} currentPage={currentPage} page={totalPages-2}/>
+        );
+      }
+
       for (let i = currentPage - delta; i <= currentPage + delta; ++i) {
         if (i > 1 && i < totalPages) {
           buttons.push(
-            <button
-              style={
-                i === currentPage
-                  ? { backgroundColor: "#0087E9", color: "white" }
-                  : {}
-              }
-              className="Pagination-button"
-              onClick={() => onChangePage(i)}
-              key={i}
-              disabled={currentPage === i}
-            >
-              {i}
-            </button>
+            <PaginationButton key={i} onChangePage={onChangePage} currentPage={currentPage} page={i}/>
           );
         }
       }
     }
-
+    
     if (currentPage < totalPages - 2) {
       buttons.push(
         <span className="Pagination-dots" key="dots2">
@@ -78,19 +49,7 @@ const Pagination = ({ currentPage, totalItems, limit, onChangePage }) => {
       );
     }
     buttons.push(
-      <button
-        style={
-          totalPages === currentPage
-            ? { backgroundColor: "#0087E9", color: "white" }
-            : {}
-        }
-        className="Pagination-button"
-        onClick={() => onChangePage(totalPages)}
-        key={totalPages}
-        disabled={currentPage === totalPages}
-      >
-        {totalPages}
-      </button>
+      <PaginationButton key={totalPages} onChangePage={onChangePage} currentPage={currentPage} page={totalPages}/>
     );
 
     return buttons;

@@ -1,0 +1,23 @@
+.ProductDescription{
+    padding: 0 41px 0 40px;
+}
+
+.ProductDescription-text{
+    font-size: 18px;
+    line-height: 20.7px;
+}
+
+.ProductDescription-textBold{
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+.ProductDescription-price{
+    font-size: 24px;
+    line-height: 27.76px;
+    font-weight: 700;
+}
+
+.ProductDescription-price-left{
+    margin-left: 5px;
+}

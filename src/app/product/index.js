@@ -13,10 +13,6 @@ const Product = () => {
 
   const select = useSelector((state) => ({
     currentProduct: state.product.currentProduct,
-    list: state.catalog.list,
-    totalItems: state.catalog.totalItems,
-    limit: state.catalog.limit,
-    currentPage: state.catalog.currentPage,
     amount: state.basket.amount,
     sum: state.basket.sum,
   }));
@@ -32,15 +28,10 @@ const Product = () => {
       () => store.actions.modals.open("basket"),
       [store]
     ),
-    // setCurrentPage: useCallback(
-    //   (page) => store.actions.catalog.setCurrentPage(page),
-    //   [store]
-    // ),
   };
 
   useEffect(() => {
     store.actions.product.loadOne(idParams);
-    // console.log("select", select.currentProduct.title);
   }, [idParams]);
 
   return (
@@ -51,7 +42,7 @@ const Product = () => {
         amount={select.amount}
         sum={select.sum}
       />
-      <ProductDescription {...select.currentProduct} />
+      <ProductDescription {...select.currentProduct} addToBasket={callbacks.addToBasket}/>
     </PageLayout>
   );
 };
