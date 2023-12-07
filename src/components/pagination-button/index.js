@@ -1,21 +1,21 @@
-import React from 'react'
-import './style.css'
+import React from "react";
+import "./style.css";
 
-const PaginationButton = ({page, currentPage, onChangePage}) => {
+const PaginationButton = ({ page, currentPage, onChangePage }) => {
   return (
     <button
-        style={
-            page === currentPage
-                ? { backgroundColor: "#0087E9", color: "white" }
-                : {}
-        }
-        className="Pagination-button"
-        onClick={() => onChangePage(page)}
-        disabled={currentPage === page}
+      style={
+        page === currentPage
+          ? { backgroundColor: "#0087E9", color: "white" }
+          : {}
+      }
+      className={"Pagination-button"}
+      onClick={() => onChangePage(page)}
+      disabled={currentPage === page}
     >
-        {page}
+      {page}
     </button>
-  )
-}
+  );
+};
 
-export default PaginationButton
+export default PaginationButton;

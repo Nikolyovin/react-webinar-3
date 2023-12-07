@@ -18,12 +18,10 @@ const Product = () => {
   }));
 
   const callbacks = {
-    // Добавление в корзину
     addToBasket: useCallback(
       (_id) => store.actions.basket.addToBasket(_id),
       [store]
     ),
-    // Открытие модалки корзины
     openModalBasket: useCallback(
       () => store.actions.modals.open("basket"),
       [store]
@@ -42,7 +40,10 @@ const Product = () => {
         amount={select.amount}
         sum={select.sum}
       />
-      <ProductDescription {...select.currentProduct} addToBasket={callbacks.addToBasket}/>
+      <ProductDescription
+        {...select.currentProduct}
+        addToBasket={callbacks.addToBasket}
+      />
     </PageLayout>
   );
 };
