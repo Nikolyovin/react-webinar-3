@@ -7,6 +7,7 @@ import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
+import { translations } from "../../translations";
 
 function Main() {
   const store = useStore();
@@ -18,6 +19,7 @@ function Main() {
     currentPage: state.catalog.currentPage,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    isTranslation: state.common.isTranslation,
   }));
 
   useEffect(() => {
@@ -39,21 +41,38 @@ function Main() {
       (page) => store.actions.catalog.setCurrentPage(page),
       [store]
     ),
+    setIsTranslation: useCallback(
+      () => store.actions.common.setIsTranslation(),
+      [store]
+    ),
   };
 
   const renders = {
     item: useCallback(
       (item) => {
-        return <Item item={item} onAdd={callbacks.addToBasket} />;
+        return (
+          <Item
+            item={item}
+            isTranslation={select.isTranslation}
+            onAdd={callbacks.addToBasket}
+          />
+        );
       },
-      [callbacks.addToBasket]
+      [callbacks.addToBasket, select.isTranslation]
     ),
   };
 
+  const lang = select.isTranslation ? "en" : "ru";
+
   return (
     <PageLayout>
-      <Head title="Магазин" />
+      <Head
+        setIsTranslation={callbacks.setIsTranslation}
+        isTranslation={select.isTranslation}
+        title={translations[lang].store}
+      />
       <BasketTool
+        isTranslation={select.isTranslation}
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
         sum={select.sum}

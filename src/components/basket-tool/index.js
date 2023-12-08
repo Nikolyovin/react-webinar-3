@@ -4,27 +4,29 @@ import { cn as bem } from "@bem-react/classname";
 import { numberFormat, plural } from "../../utils";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
+import { translations } from "../../translations";
 
-function BasketTool({ sum, amount, onOpen }) {
+function BasketTool({ sum, amount, onOpen, isTranslation }) {
+  const lang = isTranslation ? "en" : "ru";
   const cn = bem("BasketTool");
   const navigate = useNavigate();
   return (
     <div className={cn()}>
       <div onClick={() => navigate(`/app`)} className={cn("home")}>
-        Главная
+        {translations[lang].home}
       </div>
       <div>
-        <span className={cn("label")}>В корзине:</span>
+        <span className={cn("label")}>{translations[lang].inTheCart}:</span>
         <span className={cn("total")}>
           {amount
             ? `${amount} ${plural(amount, {
-                one: "товар",
-                few: "товара",
-                many: "товаров",
+                one: `${translations[lang].oneProduct}`,
+                few: `${translations[lang].twoProduct}`,
+                many: `${translations[lang].manyProduct}`,
               })} / ${numberFormat(sum)} ₽`
-            : `пусто`}
+            : `${translations[lang].empty}`}
         </span>
-        <button onClick={onOpen}>Перейти</button>
+        <button onClick={onOpen}>{translations[lang].goToCart}</button>
       </div>
     </div>
   );

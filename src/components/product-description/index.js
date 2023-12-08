@@ -2,9 +2,11 @@ import React from "react";
 import "./style.css";
 import { cn as bem } from "@bem-react/classname";
 import { numberFormat } from "../../utils";
+import { translations } from "../../translations";
 
 const ProductDescription = (props) => {
   const cn = bem("ProductDescription");
+  const lang = props.isTranslation ? "en" : "ru";
 
   const callbacks = {
     addToBasket: props.addToBasket,
@@ -34,7 +36,7 @@ const ProductDescription = (props) => {
         onClick={() => callbacks.addToBasket(props._id)}
         className={cn("button")}
       >
-        Добавить
+        {translations[lang].add}
       </button>
     </div>
   );

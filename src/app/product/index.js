@@ -15,6 +15,7 @@ const Product = () => {
     currentProduct: state.product.currentProduct,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    isTranslation: state.common.isTranslation,
   }));
 
   const callbacks = {
@@ -26,6 +27,10 @@ const Product = () => {
       () => store.actions.modals.open("basket"),
       [store]
     ),
+    setIsTranslation: useCallback(
+      () => store.actions.common.setIsTranslation(),
+      [store]
+    ),
   };
 
   useEffect(() => {
@@ -34,13 +39,19 @@ const Product = () => {
 
   return (
     <PageLayout>
-      <Head title={select.currentProduct.title} />
+      <Head
+        setIsTranslation={callbacks.setIsTranslation}
+        isTranslation={select.isTranslation}
+        title={select.currentProduct.title}
+      />
       <BasketTool
+        isTranslation={select.isTranslation}
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
         sum={select.sum}
       />
       <ProductDescription
+        isTranslation={select.isTranslation}
         {...select.currentProduct}
         addToBasket={callbacks.addToBasket}
       />
