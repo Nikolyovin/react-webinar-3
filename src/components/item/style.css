@@ -20,7 +20,12 @@
   padding: 20px 10px;
 }
 
-.Item-title:hover {
+.Item-titleLink {
+  text-decoration: none;
+  color: black;
+}
+
+.Item-titleLink:hover {
   text-decoration: underline;
   cursor: pointer;
 }

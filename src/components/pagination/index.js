@@ -4,58 +4,40 @@ import PaginationButton from "../pagination-button";
 
 const Pagination = ({ currentPage, totalItems, limit, onChangePage }) => {
   const totalPages = Math.floor(totalItems / limit);
-  const renderButtons = () => {
-    const buttons = [];
-    const delta = 1;
 
-    if (currentPage === 1) {
-      for (let i = 1; i <= Math.min(3, totalPages); ++i) {
-        buttons.push(
-          <PaginationButton key={i} onChangePage={onChangePage} currentPage={currentPage} page={i}/>
-        );
-      }
-    } else {
-      buttons.push(
-        <PaginationButton key={1} onChangePage={onChangePage} currentPage={currentPage} page={1}/>
-      );
-      if (currentPage > 3) {
-        buttons.push(
-          <span className="Pagination-dots" key="dots1">
-            ...
-          </span>
-        );
-      }
-
-      if (currentPage === totalPages) {
-        buttons.push(
-          <PaginationButton key={totalPages-2} onChangePage={onChangePage} currentPage={currentPage} page={totalPages-2}/>
-        );
-      }
-
-      for (let i = currentPage - delta; i <= currentPage + delta; ++i) {
-        if (i > 1 && i < totalPages) {
-          buttons.push(
-            <PaginationButton key={i} onChangePage={onChangePage} currentPage={currentPage} page={i}/>
-          );
-        }
-      }
+  const generateArray = () => {
+    const array = [];
+  
+    if (currentPage === 1 || currentPage === 2) {
+      array.push(1, 2, 3, '...', totalPages);
+    } else if (currentPage === 3) {
+      array.push(1, 2, 3, 4, '...', totalPages);
+    } else if (currentPage > 3 && currentPage < totalPages-2) {
+      array.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+    } else if (currentPage === totalPages-2) {
+      array.push(1,'...',totalPages-3, totalPages-2,totalPages-1,totalPages);
+    } else if (currentPage === totalPages-1 || currentPage === totalPages ){
+      array.push(1,'...',totalPages-2,totalPages-1,totalPages);
     }
-    
-    if (currentPage < totalPages - 2) {
-      buttons.push(
-        <span className="Pagination-dots" key="dots2">
-          ...
-        </span>
-      );
-    }
-    buttons.push(
-      <PaginationButton key={totalPages} onChangePage={onChangePage} currentPage={currentPage} page={totalPages}/>
-    );
-
-    return buttons;
+  
+    return array;
   };
 
-  return <div className="Pagination">{renderButtons()}</div>;
+  return (
+    <div className="Pagination">
+      {generateArray().map((item,index )=> item === '...' 
+        ? <span className="Pagination-dots" key={index}>
+            ...
+          </span>
+        : <PaginationButton 
+            key={index} 
+            onChangePage={onChangePage} 
+            currentPage={currentPage} 
+            page={item}
+          />
+      )}
+    </div>
+  )
 };
 
 export default Pagination;

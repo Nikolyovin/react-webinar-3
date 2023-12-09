@@ -15,7 +15,12 @@
   padding: 20px 10px;
 }
 
-.ItemBasket-title:hover {
+.ItemBasket-titleLink {
+  text-decoration: none;
+  color: black;
+}
+
+.ItemBasket-titleLink:hover {
   text-decoration: underline;
   cursor: pointer;
 }

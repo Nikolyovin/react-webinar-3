@@ -5,6 +5,7 @@ import { numberFormat, plural } from "../../utils";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import { translations } from "../../translations";
+import Navbar from "../navbar";
 
 function BasketTool({ sum, amount, onOpen, isTranslation }) {
   const lang = isTranslation ? "en" : "ru";
@@ -12,9 +13,7 @@ function BasketTool({ sum, amount, onOpen, isTranslation }) {
   const navigate = useNavigate();
   return (
     <div className={cn()}>
-      <div onClick={() => navigate(`/app`)} className={cn("home")}>
-        {translations[lang].home}
-      </div>
+      <Navbar lang={lang}/>
       <div>
         <span className={cn("label")}>{translations[lang].inTheCart}:</span>
         <span className={cn("total")}>
