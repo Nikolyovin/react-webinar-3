@@ -16,10 +16,12 @@ class CatalogState extends StoreModule {
         page: 1,
         limit: 10,
         sort: 'order',
-        query: ''
+        query: '',
+        category: "65782dc9cbf638685992a341"
       },
       count: 0,
-      waiting: false
+      waiting: false,
+      categories: []
     }
   }
 
@@ -81,8 +83,13 @@ class CatalogState extends StoreModule {
       skip: (params.page - 1) * params.limit,
       fields: 'items(*),count',
       sort: params.sort,
-      'search[query]': params.query
+      'search[query]': params.query,
+      'search[category]': params.category
     };
+
+    if (!params.category) delete apiParams['search[category]']
+
+
 
     const response = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
     const json = await response.json();
@@ -92,6 +99,32 @@ class CatalogState extends StoreModule {
       count: json.result.count,
       waiting: false
     }, 'Загружен список товаров из АПИ');
+  }
+
+  async getCategories() {
+    const response = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`)
+    const json = await response.json()
+ 
+    function flattenCategories(categories, parentId = null, depth=0) {
+      const result = [];
+
+      categories.map(category => {
+          if ((parentId === null && category.parent === null) || (category.parent && category.parent._id === parentId)) {
+            const indentedTitle = '-'.repeat(depth) + category.title;
+            result.push({ ...category, title: indentedTitle });
+            // Рекурсивно вызываем для дочерних категорий
+            result.push(...flattenCategories(categories, category._id, depth+1));
+          }
+      });
+
+      return result;
+    }
+    const sortedCategories = flattenCategories(json.result.items);
+
+    this.setState({
+      ...this.getState(),
+      categories: sortedCategories
+    }, 'Загрузили категории из АПИ');
   }
 }
 
