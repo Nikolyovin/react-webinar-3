@@ -1,4 +1,4 @@
-import {memo, useCallback, useEffect, useMemo} from "react";
+import { memo, useCallback, useEffect, useMemo } from "react";
 import useTranslate from "../../hooks/use-translate";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
@@ -10,62 +10,83 @@ import SideLayout from "../../components/side-layout";
  * Контейнер со всеми фильтрами каталога
  */
 function CatalogFilter() {
-
   const store = useStore();
 
-  const select = useSelector(state => ({
+  const select = useSelector((state) => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
-    categories: state.catalog.categories
+    categories: state.catalog.categories,
+    category: state.catalog.params.category,
   }));
 
   const callbacks = {
     // Сортировка
-    onSort: useCallback(sort => store.actions.catalog.setParams({sort}), [store]),
+    onSort: useCallback(
+      (sort) => store.actions.catalog.setParams({ sort }),
+      [store]
+    ),
     // Поиск
-    onSearch: useCallback(query => store.actions.catalog.setParams({query, page: 1}), [store]),
+    onSearch: useCallback(
+      (query) => store.actions.catalog.setParams({ query, page: 1 }),
+      [store]
+    ),
     // Сброс
     onReset: useCallback(() => store.actions.catalog.resetParams(), [store]),
-    getCategories: useCallback(()=> store.actions.catalog.getCategories(), [store])
-
+    onCategories: useCallback(
+      (category) => store.actions.catalog.setParams({ category, page: 1 }),
+      [store]
+    ),
+    getCategories: useCallback(
+      () => store.actions.catalog.getCategories(),
+      [store]
+    ),
   };
 
-  useEffect(()=> {
-    callbacks.getCategories()
-  }, [])
-
-  
+  useEffect(() => {
+    callbacks.getCategories();
+  }, []);
 
   const options = {
-    sort: useMemo(() => ([
-      {value: 'order', title: 'По порядку'},
-      {value: 'title.ru', title: 'По именованию'},
-      {value: '-price', title: 'Сначала дорогие'},
-      {value: 'edition', title: 'Древние'},
-    ]), []),
-    categories: [{value: 'all', title: 'Все'}, ...select.categories.map(({ title,_id }) => ({ value: _id, title }))]
-    // .push({ value: 'all', title: 'Все' }),
-    
+    sort: useMemo(
+      () => [
+        { value: "order", title: "По порядку" },
+        { value: "title.ru", title: "По именованию" },
+        { value: "-price", title: "Сначала дорогие" },
+        { value: "edition", title: "Древние" },
+      ],
+      []
+    ),
+    categories: [
+      { value: "", title: "Все" },
+      ...select.categories.map(({ title, _id }) => ({ value: _id, title })),
+    ],
   };
 
-  console.log('categories', options.categories);
+  console.log("categories", options.categories);
 
-  const {t} = useTranslate();
+  const { t } = useTranslate();
 
   return (
-    <SideLayout padding='medium'>
-      <Select 
-        // key={}
-        options={options.categories} 
-        value={select.sort} 
+    <SideLayout padding="medium">
+      <Select
+        options={options.categories}
+        value={select.category}
+        onChange={callbacks.onCategories}
+      />
+      <Select
+        options={options.sort}
+        value={select.sort}
         onChange={callbacks.onSort}
       />
-      <Select options={options.sort} value={select.sort} onChange={callbacks.onSort}/>
-      <Input value={select.query} onChange={callbacks.onSearch} placeholder={'Поиск'}
-             delay={1000}/>
-      <button onClick={callbacks.onReset}>{t('filter.reset')}</button>
+      <Input
+        value={select.query}
+        onChange={callbacks.onSearch}
+        placeholder={"Поиск"}
+        delay={1000}
+      />
+      <button onClick={callbacks.onReset}>{t("filter.reset")}</button>
     </SideLayout>
-  )
+  );
 }
 
 export default memo(CatalogFilter);
