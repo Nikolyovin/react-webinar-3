@@ -10,21 +10,17 @@ import useTranslate from "../../hooks/use-translate";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../../components/login-form";
 
-function Login() {
+function Profile() {
   const store = useStore();
 
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
-  //   useInit(() => {
-  //     store.actions.article.load(params.id);
-  //   }, [params.id]);
-
-  const select = useSelector((state) => ({
-    // article: state.article.data,
-    // waiting: state.article.waiting,
-    username: state.login.username,
-    isAuth: state.login.isAuth
-  }));
+//   const select = useSelector((state) => ({
+//     // article: state.article.data,
+//     // waiting: state.article.waiting,
+//     username: state.login.username,
+//     isAuth: state.login.isAuth
+//   }));
 
   const { t } = useTranslate();
 
@@ -32,18 +28,18 @@ function Login() {
     onNavigate: useCallback(() => navigate("/login"), [store]),
     onLogin: useCallback((login, password) => store.actions.login.login(login, password), [store]),
   };
-  console.log(select.username);
-  console.log(select.isAuth);
+
   return (
     <PageLayout>
-      <Header onNavigate={callbacks.onNavigate} username={select.username} isAuth={select.isAuth}/>
+      {/* <Header onNavigate={callbacks.onNavigate} username={select.username} isAuth={select.isAuth}/>
       <Head title={t("title")}>
         <LocaleSelect />
       </Head>
       <Navigation />
-      <LoginForm onLogin={callbacks.onLogin}/>
+      <LoginForm onLogin={callbacks.onLogin}/> */}
+      <div>Profile</div>
     </PageLayout>
   );
 }
 
-export default memo(Login);
+export default memo(Profile);

@@ -4,12 +4,12 @@ import Item from "../item";
 import "./style.css";
 import Input from "../input";
 
-function LoginForm() {
+function LoginForm({onLogin}) {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(login, password);
+    onLogin(login, password);
   };
 
   return (
@@ -32,16 +32,13 @@ function LoginForm() {
   );
 }
 
-// List.propTypes = {
-//   list: PropTypes.arrayOf(PropTypes.shape({
-//     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-//   })).isRequired,
-//   renderItem: PropTypes.func,
-// };
+LoginForm.propTypes = {
+  onLogin: PropTypes.func,
+};
 
-// List.defaultProps = {
-//   renderItem: (item) => {
-//   },
-// }
+LoginForm.defaultProps = {
+  onLogin: () => {
+  },
+}
 
 export default memo(LoginForm);
