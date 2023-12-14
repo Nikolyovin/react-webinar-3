@@ -15,33 +15,39 @@ function Login() {
 
   const navigate = useNavigate();
 
-  //   useInit(() => {
-  //     store.actions.article.load(params.id);
-  //   }, [params.id]);
-
   const select = useSelector((state) => ({
-    // article: state.article.data,
-    // waiting: state.article.waiting,
     username: state.login.username,
-    isAuth: state.login.isAuth
+    isAuth: state.login.isAuth,
+    errorMessage: state.login.errorMessage,
   }));
 
   const { t } = useTranslate();
 
   const callbacks = {
     onNavigate: useCallback(() => navigate("/login"), [store]),
-    onLogin: useCallback((login, password) => store.actions.login.login(login, password), [store]),
+    onLogin: useCallback(
+      (login, password) => store.actions.login.login(login, password),
+      [store]
+    ),
+    onLogout: useCallback(() => store.actions.login.logout(), [store]),
   };
-  console.log(select.username);
-  console.log(select.isAuth);
+
   return (
     <PageLayout>
-      <Header onNavigate={callbacks.onNavigate} username={select.username} isAuth={select.isAuth}/>
+      <Header
+        onLogout={callbacks.onLogout}
+        onNavigate={callbacks.onNavigate}
+        username={select.username}
+        isAuth={select.isAuth}
+      />
       <Head title={t("title")}>
         <LocaleSelect />
       </Head>
       <Navigation />
-      <LoginForm onLogin={callbacks.onLogin}/>
+      <LoginForm
+        onLogin={callbacks.onLogin}
+        errorMessage={select.errorMessage}
+      />
     </PageLayout>
   );
 }

@@ -10,6 +10,7 @@ import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
 import Header from "../../components/header";
 import { useNavigate } from "react-router-dom";
+import useSelector from "../../hooks/use-selector";
 
 /**
  * Главная страница - первичная загрузка каталога
@@ -28,13 +29,24 @@ function Main() {
 
   const { t } = useTranslate();
 
+  const select = useSelector((state) => ({
+    username: state.login.username,
+    isAuth: state.login.isAuth,
+  }));
+
   const callbacks = {
     onNavigate: useCallback(() => navigate("/login"), [store]),
+    onLogout: useCallback(() => store.actions.login.logout(), [store]),
   };
 
   return (
     <PageLayout>
-      <Header onNavigate={callbacks.onNavigate} />
+      <Header
+        onLogout={callbacks.onLogout}
+        onNavigate={callbacks.onNavigate}
+        username={select.username}
+        isAuth={select.isAuth}
+      />
       <Head title={t("title")}>
         <LocaleSelect />
       </Head>

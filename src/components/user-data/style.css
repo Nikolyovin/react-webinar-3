@@ -1,0 +1,27 @@
+.UserData {
+    padding:  14px 20px;
+}
+
+.UserData-title{
+    font-size: 24px;
+    line-height: 27.6px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.UserData-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.UserData-item{
+    margin-bottom: 22px;
+    font-size: 18px;
+    line-height: 20.7px;
+}
+
+.UserData-item-bold{
+    font-weight: 700;
+    margin-left: 3px;
+}

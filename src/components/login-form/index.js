@@ -4,12 +4,14 @@ import Item from "../item";
 import "./style.css";
 import Input from "../input";
 
-function LoginForm({onLogin}) {
+function LoginForm({ onLogin, errorMessage }) {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     onLogin(login, password);
+    setLogin("");
+    setPassword("");
   };
 
   return (
@@ -24,7 +26,7 @@ function LoginForm({onLogin}) {
         value={password}
         onChange={setPassword}
       />
-      <span className="LoginForm-error">Ошибки какие-то</span>
+      {errorMessage && <span className="LoginForm-error">{errorMessage}</span>}
       <button className="LoginForm-button" type="submit">
         Войти
       </button>
@@ -34,11 +36,11 @@ function LoginForm({onLogin}) {
 
 LoginForm.propTypes = {
   onLogin: PropTypes.func,
+  errorMessage: PropTypes.string,
 };
 
 LoginForm.defaultProps = {
-  onLogin: () => {
-  },
-}
+  onLogin: () => {},
+};
 
 export default memo(LoginForm);

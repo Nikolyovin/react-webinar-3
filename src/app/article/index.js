@@ -30,6 +30,8 @@ function Article() {
   const select = useSelector((state) => ({
     article: state.article.data,
     waiting: state.article.waiting,
+    username: state.login.username,
+    isAuth: state.login.isAuth,
   }));
 
   const { t } = useTranslate();
@@ -41,11 +43,17 @@ function Article() {
       [store]
     ),
     onNavigate: useCallback(() => navigate("/login"), [store]),
+    onLogout: useCallback(() => store.actions.login.logout(), [store]),
   };
 
   return (
     <PageLayout>
-      <Header onNavigate={callbacks.onNavigate} />
+      <Header
+        onLogout={callbacks.onLogout}
+        onNavigate={callbacks.onNavigate}
+        username={select.username}
+        isAuth={select.isAuth}
+      />
       <Head title={select.article.title}>
         <LocaleSelect />
       </Head>
