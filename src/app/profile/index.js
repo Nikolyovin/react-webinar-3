@@ -7,8 +7,6 @@ import useInit from "../../hooks/use-init";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import Navigation from "../../containers/navigation";
-import Spinner from "../../components/spinner";
-import ArticleCard from "../../components/article-card";
 import LocaleSelect from "../../containers/locale-select";
 import Header from "../../components/header";
 import UserData from "../../components/user-data";
@@ -34,6 +32,7 @@ function Profile() {
     onLogout: useCallback(() => store.actions.login.logout(), [store]),
     getUser: useCallback(() => store.actions.login.getUser(), [store]),
   };
+
   useEffect(() => {
     callbacks.getUser();
   }, [select.isAuth]);

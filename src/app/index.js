@@ -20,7 +20,6 @@ function App() {
       <Routes>
         <Route path={""} element={<Main />} />
         <Route path={"/articles/:id"} element={<Article />} />
-        {/* {!isAuth && <Route path={"/login"} element={<Login />} />} */}
         <Route path={"/login"} element={<Login />} />
         {isAuth && <Route path={"/profile"} element={<Profile />} />}
         <Route path="/*" element={<Navigate to="/login" replace />} />

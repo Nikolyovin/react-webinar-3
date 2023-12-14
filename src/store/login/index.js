@@ -20,7 +20,6 @@ class LoginState extends StoreModule {
       body: JSON.stringify(payload),
     });
     const json = await response.json();
-    console.log("json", json);
 
     if (response.status === 200) {
       localStorage.setItem("token", json.result.token);
@@ -55,8 +54,7 @@ class LoginState extends StoreModule {
         "Content-Type": "application/json",
       },
     });
-    const json = await response.json();
-    console.log("response", response);
+
     if (response.status === 200) {
       localStorage.removeItem("token");
       localStorage.removeItem("isAuth");
@@ -81,7 +79,7 @@ class LoginState extends StoreModule {
       },
     });
     const json = await response.json();
-    console.log("json", json);
+
     if (response.status === 200) {
       const { email } = json.result;
       const { name, phone } = json.result.profile;

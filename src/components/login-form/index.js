@@ -7,6 +7,7 @@ import Input from "../input";
 function LoginForm({ onLogin, errorMessage }) {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onLogin(login, password);
