@@ -6,7 +6,7 @@ class LoginState extends StoreModule {
       username: localStorage.getItem("username"),
       isAuth: JSON.parse(localStorage.getItem("isAuth")),
       errorMessage: "",
-      user: {},
+      // user: {},
     };
   }
 
@@ -71,41 +71,51 @@ class LoginState extends StoreModule {
     }
   }
 
-  async getUser() {
-    const response = await fetch("api/v1/users/self?fields=email,profile", {
-      headers: {
-        "X-Token": localStorage.getItem("token"),
-        "Content-Type": "application/json",
+  resetErrorMessage(){
+    this.setState(
+      {
+        ...this.getState(),
+        errorMessage: "",
       },
-    });
-    const json = await response.json();
-
-    if (response.status === 200) {
-      const { email } = json.result;
-      const { name, phone } = json.result.profile;
-
-      this.setState(
-        {
-          ...this.getState(),
-          user: { email, name, phone },
-        },
-        "Пользователь вышел!"
-      );
-    } else {
-      localStorage.removeItem("token");
-      localStorage.removeItem("isAuth");
-      localStorage.removeItem("username");
-
-      this.setState(
-        {
-          ...this.getState(),
-          username: "",
-          isAuth: false,
-        },
-        "Пользователь не авторизован!"
-      );
-    }
+      "Сброс ошибки!"
+    );
   }
+
+  // async getUser() {
+  //   const response = await fetch("api/v1/users/self?fields=email,profile", {
+  //     headers: {
+  //       "X-Token": localStorage.getItem("token"),
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const json = await response.json();
+
+  //   if (response.status === 200) {
+  //     const { email } = json.result;
+  //     const { name, phone } = json.result.profile;
+
+  //     this.setState(
+  //       {
+  //         ...this.getState(),
+  //         user: { email, name, phone },
+  //       },
+  //       "Пользователь вышел!"
+  //     );
+  //   } else {
+  //     localStorage.removeItem("token");
+  //     localStorage.removeItem("isAuth");
+  //     localStorage.removeItem("username");
+
+  //     this.setState(
+  //       {
+  //         ...this.getState(),
+  //         username: "",
+  //         isAuth: false,
+  //       },
+  //       "Пользователь не авторизован!"
+  //     );
+  //   }
+  // }
 }
 
 export default LoginState;

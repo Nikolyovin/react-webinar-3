@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useEffect, useMemo } from "react";
 import useStore from "../../hooks/use-store";
 import PageLayout from "../../components/page-layout";
 import Header from "../../components/header";
@@ -14,6 +14,7 @@ function Login() {
   const store = useStore();
 
   const navigate = useNavigate();
+  const token = localStorage.getItem("token")
 
   const select = useSelector((state) => ({
     username: state.login.username,
@@ -30,7 +31,13 @@ function Login() {
       [store]
     ),
     onLogout: useCallback(() => store.actions.login.logout(), [store]),
+    resetErrorMessage: useCallback(() => store.actions.login.resetErrorMessage(), [store]),
   };
+
+  useEffect(() => {
+    callbacks.resetErrorMessage()
+    if (select.isAuth  && token && location.pathname === '/login') navigate(-1)
+  },[select.isAuth])
 
   return (
     <PageLayout>

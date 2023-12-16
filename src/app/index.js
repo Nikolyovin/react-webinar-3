@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import useSelector from "../hooks/use-selector";
 import Main from "./main";
 import Basket from "./basket";
@@ -13,7 +13,6 @@ import Profile from "./profile";
  */
 function App() {
   const activeModal = useSelector((state) => state.modals.name);
-  const isAuth = useSelector((state) => state.login.isAuth);
 
   return (
     <>
@@ -21,7 +20,7 @@ function App() {
         <Route path={""} element={<Main />} />
         <Route path={"/articles/:id"} element={<Article />} />
         <Route path={"/login"} element={<Login />} />
-        {isAuth && <Route path={"/profile"} element={<Profile />} />}
+        <Route path={"/profile"} element={<Profile />} />
         <Route path="/*" element={<Navigate to="/login" replace />} />
       </Routes>
 
