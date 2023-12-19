@@ -9,12 +9,17 @@ import CatalogFilter from '../../containers/catalog-filter';
 import CatalogList from '../../containers/catalog-list';
 import LocaleSelect from '../../containers/locale-select';
 import TopHead from '../../containers/top-head';
+import { useDispatch } from 'react-redux';
+import commentActions from '../../store-redux/comment/actions';
 
 function Main() {
 
   const store = useStore();
 
+  // const dispatch = useDispatch();
+
   useInit(async () => {
+    // dispatch(commentActions.loadAll())
     await Promise.all([
       store.actions.catalog.initParams(),
       store.actions.categories.load()
